@@ -1,7 +1,12 @@
+
 from multipledispatch import dispatch
 
 
 class A:
+    @dispatch()
+    def f(self):
+        print("nothing.")
+
     @dispatch(float)
     def f(self, x):
         print(f"float: {x}")
@@ -17,6 +22,10 @@ class A:
 
 
 class B(A):
+    @dispatch()
+    def f(self):
+        super().f()
+
     @dispatch(object)
     def f(self, x):
         super().f(x)
@@ -30,8 +39,11 @@ a = A()
 a.f(1.0)
 a.f("a")
 a.f(1)
+a.f()
 
 b = B()
 b.f(1.0)
 b.f("a")
 b.f(1)
+b.f()
+
