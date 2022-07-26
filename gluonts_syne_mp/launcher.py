@@ -23,22 +23,7 @@ if __name__ == "__main__":
     mode = "min"
     metric = "epoch_loss"
 
-    if False:
-        trial_backend = SageMakerBackend(
-            sm_estimator=PyTorch(
-                entry_point="mp_queue.py",
-                source_dir=".",
-                instance_type="local",
-                instance_count=1,
-                role=get_execution_role(),
-                py_version="py38",
-                framework_version="1.10.0",
-                base_job_name="hpo-gluonts",
-            ),
-            metrics_names=[metric],
-        )
-    else:
-        trial_backend = LocalBackend(entry_point="./mp_queue.py")
+    trial_backend = LocalBackend(entry_point="./runner.py")
 
     scheduler = ASHA(
         config_space, max_t=10, resource_attr="epoch", mode="min", metric=metric

@@ -30,7 +30,7 @@ def run_deepar(queue, lr):
     model = DeepAREstimator(
         freq=dataset.metadata.freq,
         prediction_length=dataset.metadata.prediction_length,
-        trainer=Trainer(epochs=10, callbacks=[CB(queue)]),
+        trainer=Trainer(epochs=10, learning_rate=lr, callbacks=[CB(queue)]),
     )
     predictor = model.train(dataset.train)
     queue.put((-1, 0))
